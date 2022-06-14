@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
-
+import ModalButton from '../styled/ModalButton';
 import { Input } from '../styled/TasksForm';
 import {
   ModalContainer,
@@ -8,8 +8,6 @@ import {
   CloseButton,
   Form,
   Select,
-  SaveButton,
-  CancelButton,
 } from '../styled/Modal';
 import { TasksContext } from './context/TasksContext';
 
@@ -40,6 +38,7 @@ const Modal = ({ isOpen, setIsOpen }) => {
         <CloseButton onClick={() => setIsOpen(false)}>
           <FaTimes />
         </CloseButton>
+
         <Form onSubmit={handleSubmit}>
           <label>Edit Task</label>
           <Input
@@ -60,9 +59,12 @@ const Modal = ({ isOpen, setIsOpen }) => {
             <option value={true}>Done</option>
           </Select>
 
-          <SaveButton>Save</SaveButton>
+          <ModalButton isModalPrimary={true}>Save</ModalButton>
         </Form>
-        <CancelButton onClick={() => setIsOpen(false)}>Cancel</CancelButton>
+
+        <ModalButton isModalPrimary={false} onClick={() => setIsOpen(false)}>
+          Cancel
+        </ModalButton>
       </ModalContent>
     </ModalContainer>
   );

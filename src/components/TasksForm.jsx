@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { TasksContext } from './context/TasksContext';
-import { Form, Input, Button } from '../styled/TasksForm';
+import { Form, Input } from '../styled/TasksForm';
+import Button from '../styled/Button';
 
 const TasksForm = () => {
   const [text, setText] = useState('');
