@@ -13,6 +13,7 @@ const TasksForm = () => {
     const newTask = {
       title: text,
       finished: false,
+      id: Math.random(),
     };
     createTask(newTask);
     setText('');

@@ -1,5 +1,23 @@
 import { createContext, useState } from 'react';
 
+const tasksExamples = [
+  {
+    title: 'Go to the Gym',
+    finished: true,
+    id: 2,
+  },
+  {
+    title: 'Watch a new movie',
+    finished: true,
+    id: 6,
+  },
+  {
+    title: 'Read a book',
+    finished: false,
+    id: 7,
+  },
+];
+
 export const TasksContext = createContext({
   tasks: [],
   selectedTask: {},
@@ -12,65 +30,25 @@ const TasksProvider = ({ children }) => {
   // CRUD Actions
   // 1.Get Tasks
   const getTasks = async () => {
-    try {
-      const response = await fetch('http://localhost:3001/tasks');
-      const data = await response.json();
-      setTasks(data);
-    } catch (err) {
-      console.log(err);
-    }
+    setTasks(tasksExamples);
   };
 
   // 2.Create Tasks
-  const createTask = async (data) => {
-    try {
-      const response = await fetch('http://localhost:3001/tasks', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      const item = await response.json();
-      setTasks((prev) => [...prev, item]);
-    } catch (err) {
-      console.log(err);
-    }
+  const createTask = async (newTask) => {
+    setTasks((prev) => [...prev, newTask]);
   };
 
   // 3.Delete Task
   const deleteTask = async (id) => {
-    try {
-      await fetch(`http://localhost:3001/tasks/${id}`, {
-        method: 'DELETE',
-      });
-
-      setTasks(tasks.filter((task) => task.id !== id));
-    } catch (err) {
-      console.log(err);
-    }
+    setTasks(tasks.filter((task) => task.id !== id));
   };
 
   // 4. Update Task
   const updateTask = async (id, newTask) => {
-    try {
-      const response = await fetch(`http://localhost:3001/tasks/${id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newTask),
-      });
-
-      const data = await response.json();
-
-      const updatedTasks = tasks.map((task) =>
-        task.id === id ? { ...task, ...data } : task
-      );
-      setTasks(updatedTasks);
-    } catch (err) {
-      console.log(err);
-    }
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, ...newTask } : task
+    );
+    setTasks(updatedTasks);
   };
 
   const value = {
